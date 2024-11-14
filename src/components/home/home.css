@@ -1,13 +1,13 @@
 /* HeroSection.css */
 
-.hero-section {
+.home-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px;
     height: 100vh;
     color: white;
-    background-color: #143217; /* Ersetze dies durch den gewünschten Hintergrund */
+    background-color: #143217;
   }
   
   .sidebar {
