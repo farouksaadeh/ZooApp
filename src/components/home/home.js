@@ -3,9 +3,9 @@ import './home.css';
 
 export default function Home() {
   return (
-    <section className="hero-section">
+    <section className="home-section">
       <div className="sidebar">
-        <h2>ZÜRİ ZOO</h2>
+        <h2>ZÜRI ZOO</h2>
         <ul>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#contact">Contact</a></li>
