@@ -1,76 +1,19 @@
-/* HeroSection.css */
+.login-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: white;
+  background-color: #143217;
+  border: 2px solid white;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
 
-.home-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    height: 100vh;
-    color: white;
-    background-color: #143217;
-  }
-  
-  .sidebar {
-    flex: 1;
-    max-width: 200px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .sidebar h2, .sidebar h3 {
-    font-weight: bold;
-  }
-  
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0 0 20px 0;
-  }
-  
-  .sidebar ul li {
-    margin: 10px 0;
-  }
-  
-  .sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-  }
-  
-  .main-content {
-    flex: 3;
-    text-align: center;
-    font-family: Arial, sans-serif;
-  }
-  
-  .main-content h4 {
-    font-size: 16px;
-    margin: 0;
-    font-weight: 300;
-  }
-  
-  .main-content h1 {
-    font-size: 80px;
-    margin: 0;
-    font-weight: bold;
-  }
-  
-  .main-content p {
-    font-size: 18px;
-    margin: 10px 0 30px 0;
-  }
-  
-  .purchase-button {
-    padding: 15px 30px;
-    font-size: 16px;
-    background-color: transparent;
-    border: 2px solid white;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .purchase-button:hover {
-    background-color: white;
-    color: #143217;
-  }
-  
+.login-button:hover {
+  background-color: white;
+  color: #143217;
+}
