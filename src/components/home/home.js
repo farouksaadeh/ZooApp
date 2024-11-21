@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './home.css';
 
 export default function Home() {
+  useEffect(() => {
+    document.title = 'Home | Züri Zoo';
+  }, []);
   return (
     <section className="home-section">
       <div className="sidebar">
@@ -25,3 +28,4 @@ export default function Home() {
     </section>
   );
 }
+
