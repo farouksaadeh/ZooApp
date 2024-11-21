@@ -1,5 +1,6 @@
 import React from 'react';
 import './home.css';
+import Ticket from '/.Ticket.js';
 
 export default function Home() {
   return (
@@ -20,7 +21,9 @@ export default function Home() {
         <h4>Spotted in</h4>
         <h1>Zoo Zürich</h1>
         <p>Explore exotic animals in our futuristic Tour</p>
-        <button className="purchase-button">PURCHASE TICKETS</button>
+        <a href='Linkzurneuenseite'className="btn">Buy Tickets</a>
+        
+        
       </div>
     </section>
   );
