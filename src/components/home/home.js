@@ -24,9 +24,10 @@ export default function Home() {
         <h4>Spotted in</h4>
         <h1>Zoo Zürich</h1>
         <p>Explore exotic animals in our futuristic Tour</p>
-        <button className="purchase-button">PURCHASE TICKETS</button>
       </div>
       <Link to="/login" className="login-button">Login</Link>
+      <Link to="/ticket" className="ticket-button">Tickets</Link>
+
     </section>
   );
 }
