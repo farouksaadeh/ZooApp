@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './home.css';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
+  useEffect(() => {
+    document.title = 'Home | Züri Zoo';
+  }, []);
   return (
     <section className="home-section">
       <div className="sidebar">
@@ -22,6 +26,8 @@ export default function Home() {
         <p>Explore exotic animals in our futuristic Tour</p>
         <button className="purchase-button">PURCHASE TICKETS</button>
       </div>
+      <Link to="/login" className="login-button">Login</Link>
     </section>
   );
 }
+
