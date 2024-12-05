@@ -24,7 +24,7 @@ export default function Home() {
         <h4>Spotted in</h4>
         <h1>Zoo Zürich</h1>
         <p>Explore exotic animals in our futuristic Tour</p>
-        <button className="purchase-button">PURCHASE</button>
+        <button className="purchase-button"><Link to="tour">Tour</Link></button>
       </div>
       <Link to="/login" className="login-button">Login</Link>
     </section>
