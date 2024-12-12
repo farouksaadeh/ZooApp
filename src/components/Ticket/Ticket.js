@@ -3,16 +3,28 @@ import './Ticket.css';
 
 const Ticket = () => {
   // Zustand für die Ticket-Auswahl
-  const [selectedTicket, setSelectedTicket] = useState('adult'); // Standard: Erwachsene
+  const [selectedTicket, setSelectedTicket] = useState(1); // Standard: Erwachsene (ID 1)
   const [ticketCount, setTicketCount] = useState(1); // Standard: 1 Ticket
   const [cart, setCart] = useState([]); // Warenkorb
 
   // Preise für die verschiedenen Ticket-Arten
-  const ticketPrices = {
-    adult: 20, // Preis für Erwachsene
-    child: 10, // Preis für Kinder
-    senior: 15, // Preis für Senioren
-  };
+  const ticketPrices = [
+    {
+      _id: 1,
+      name: "Kind",
+      preis: 10,
+    },
+    {
+      _id: 2,
+      name: "Jugendlicher",
+      preis: 15,
+    },
+    {
+      _id: 3,
+      name: "Erwachsener",
+      preis: 20,
+    },
+  ];
 
   // Funktion zur Aktualisierung der Ticket-Anzahl
   const handleTicketCountChange = (event) => {
@@ -21,23 +33,33 @@ const Ticket = () => {
 
   // Funktion zur Auswahl des Ticket-Typs
   const handleTicketTypeChange = (event) => {
-    setSelectedTicket(event.target.value);
+    setSelectedTicket(Number(event.target.value));
   };
 
   // Funktion zum Hinzufügen des Tickets in den Warenkorb
   const addToCart = () => {
-    const ticketPrice = ticketPrices[selectedTicket];
-    const totalPrice = ticketPrice * ticketCount;
-
-    // Füge das Ticket zum Warenkorb hinzu
-    setCart([
-      ...cart,
-      {
-        type: selectedTicket,
-        count: ticketCount,
-        price: totalPrice,
-      },
-    ]);
+    const selectedTicketInfo = ticketPrices.find(ticket => ticket._id === selectedTicket);
+    if (selectedTicketInfo) {
+      const existingItemIndex = cart.findIndex(item => item.type === selectedTicketInfo.name);
+      
+      if (existingItemIndex > -1) {
+        // Wenn das Ticket bereits im Warenkorb ist, aktualisiere die Anzahl und den Preis
+        const updatedCart = [...cart];
+        updatedCart[existingItemIndex].count += ticketCount;
+        updatedCart[existingItemIndex].price += selectedTicketInfo.preis * ticketCount;
+        setCart(updatedCart);
+      } else {
+        // Neues Ticket in den Warenkorb hinzufügen
+        setCart([
+          ...cart,
+          {
+            type: selectedTicketInfo.name,
+            count: ticketCount,
+            price: selectedTicketInfo.preis * ticketCount,
+          },
+        ]);
+      }
+    }
   };
 
   // Funktion zum Berechnen der Gesamtsumme im Warenkorb
@@ -57,9 +79,11 @@ const Ticket = () => {
             value={selectedTicket}
             onChange={handleTicketTypeChange}
           >
-            <option value="adult">Erwachsene - 20€</option>
-            <option value="child">Kinder - 10€</option>
-            <option value="senior">Senioren - 15€</option>
+            {ticketPrices.map((ticket) => (
+              <option key={ticket._id} value={ticket._id}>
+                {ticket.name} - {ticket.preis}€
+              </option>
+            ))}
           </select>
         </div>
 
@@ -94,7 +118,7 @@ const Ticket = () => {
           <ul>
             {cart.map((item, index) => (
               <li key={index}>
-                {item.count} x {item.type.charAt(0).toUpperCase() + item.type.slice(1)} - {item.price}€
+                {item.count} x {item.type} - {item.price}€
               </li>
             ))}
           </ul>
