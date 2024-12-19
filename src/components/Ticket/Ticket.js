@@ -1,132 +1,96 @@
-import React, { useState } from 'react';
-import './Ticket.css'; 
+import React, { useState, useEffect } from "react";
+import './Ticket.css';
 
 const Ticket = () => {
-  // Zustand für die Ticket-Auswahl
-  const [selectedTicket, setSelectedTicket] = useState(1); // Standard: Erwachsene (ID 1)
-  const [ticketCount, setTicketCount] = useState(1); // Standard: 1 Ticket
-  const [cart, setCart] = useState([]); // Warenkorb
+  const [ticketCount, setTicketCount] = useState(1);
+  const [cart, setCart] = useState([]);
 
-  // Preise für die verschiedenen Ticket-Arten
   const ticketPrices = [
-    {
-      _id: 1,
-      name: "Kind",
-      preis: 10,
-    },
-    {
-      _id: 2,
-      name: "Jugendlicher",
-      preis: 15,
-    },
-    {
-      _id: 3,
-      name: "Erwachsener",
-      preis: 20,
-    },
+    { _id: 1, name: 'Erwachsene (ab 21 Jahren)', onlinePrice: 27, kioskPrice: 28 },
+    { _id: 2, name: 'Jugendliche (16-20 Jahre)', onlinePrice: 22, kioskPrice: 23 },
+    { _id: 3, name: 'Kinder (6-15 Jahre)', onlinePrice: 14, kioskPrice: 15 },
   ];
 
-  // Funktion zur Aktualisierung der Ticket-Anzahl
-  const handleTicketCountChange = (event) => {
-    setTicketCount(Number(event.target.value));
-  };
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
+  }, []);
 
-  // Funktion zur Auswahl des Ticket-Typs
-  const handleTicketTypeChange = (event) => {
-    setSelectedTicket(Number(event.target.value));
-  };
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
-  // Funktion zum Hinzufügen des Tickets in den Warenkorb
-  const addToCart = () => {
-    const selectedTicketInfo = ticketPrices.find(ticket => ticket._id === selectedTicket);
-    if (selectedTicketInfo) {
-      const existingItemIndex = cart.findIndex(item => item.type === selectedTicketInfo.name);
-      
-      if (existingItemIndex > -1) {
-        // Wenn das Ticket bereits im Warenkorb ist, aktualisiere die Anzahl und den Preis
-        const updatedCart = [...cart];
-        updatedCart[existingItemIndex].count += ticketCount;
-        updatedCart[existingItemIndex].price += selectedTicketInfo.preis * ticketCount;
-        setCart(updatedCart);
-      } else {
-        // Neues Ticket in den Warenkorb hinzufügen
-        setCart([
-          ...cart,
-          {
-            type: selectedTicketInfo.name,
-            count: ticketCount,
-            price: selectedTicketInfo.preis * ticketCount,
-          },
-        ]);
-      }
+  const addToCart = (ticket) => {
+    const existingItemIndex = cart.findIndex((item) => item.type === ticket.name);
+
+    if (existingItemIndex > -1) {
+      setCart((prevCart) => {
+        const updatedCart = [...prevCart];
+        updatedCart[existingItemIndex].count += 1;
+        return updatedCart;
+      });
+    } else {
+      setCart((prevCart) => [
+        ...prevCart,
+        { type: ticket.name, count: 1, price: ticket.onlinePrice },
+      ]);
     }
   };
 
-  // Funktion zum Berechnen der Gesamtsumme im Warenkorb
+  const removeFromCart = (index) => {
+    setCart((prevCart) => prevCart.filter((_, i) => i !== index));
+  };
+
   const calculateTotal = () => {
-    return cart.reduce((total, item) => total + item.price, 0);
+    return cart.reduce((total, item) => total + item.price * item.count, 0);
   };
 
   return (
     <div className="ticket-container">
-      <h2>Wählen Sie Ihr Ticket</h2>
-
-      <form>
-        <div>
-          <label htmlFor="ticket-type">Ticket-Typ:</label>
-          <select
-            id="ticket-type"
-            value={selectedTicket}
-            onChange={handleTicketTypeChange}
-          >
-            {ticketPrices.map((ticket) => (
-              <option key={ticket._id} value={ticket._id}>
-                {ticket.name} - {ticket.preis}€
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="ticket-count">Anzahl der Tickets:</label>
-          <input
-            type="number"
-            id="ticket-count"
-            value={ticketCount}
-            onChange={handleTicketCountChange}
-            min="1"
-            max="10"
-          />
-        </div>
-
-        <div>
-          <button
-            type="button"
-            onClick={addToCart}
-            className="add-to-cart-button"
-          >
-            In den Warenkorb legen
-          </button>
-        </div>
-      </form>
-
-      <h3>Warenkorb</h3>
-      <div>
-        {cart.length === 0 ? (
-          <p>Ihr Warenkorb ist leer.</p>
-        ) : (
-          <ul>
-            {cart.map((item, index) => (
-              <li key={index}>
-                {item.count} x {item.type} - {item.price}€
-              </li>
-            ))}
-          </ul>
-        )}
+      <h2>Nebensaison (November – Februar)</h2>
+      <div className="ticket-list">
+        {ticketPrices.map((ticket) => (
+          <div key={ticket._id} className="ticket-item">
+            <div className="ticket-info">
+              <h3>{ticket.name}</h3>
+              <p>
+                Online: CHF {ticket.onlinePrice.toFixed(2)} /
+                Kasse: CHF {ticket.kioskPrice.toFixed(2)}
+              </p>
+            </div>
+            <button
+              onClick={() => addToCart(ticket)}
+              className="add-to-cart-button"
+            >
+              Ticket kaufen
+            </button>
+          </div>
+        ))}
       </div>
 
-      <div>
-        <h4>Gesamtsumme: {calculateTotal()}€</h4>
+      <h3>Warenkorb</h3>
+      {cart.length === 0 ? (
+        <p>Ihr Warenkorb ist leer.</p>
+      ) : (
+        <ul className="cart-list">
+          {cart.map((item, index) => (
+            <li key={index} className="cart-item">
+              {item.count} x {item.type} - CHF {(item.price * item.count).toFixed(2)}
+              <button
+                className="remove-button"
+                onClick={() => removeFromCart(index)}
+              >
+                Entfernen
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="cart-total">
+        <h4>Gesamtsumme: CHF {calculateTotal().toFixed(2)}</h4>
       </div>
     </div>
   );
