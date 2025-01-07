@@ -40,6 +40,8 @@ export default function Home({ loggedInUser, setLoggedInUser }) {
         </ul>
         <h3>EVENTS</h3>
         <ul>
+          <li><Link to="/tourHome">Map</Link></li>
+          <li><Link to="/tourHome">View Animals</Link></li>
           <li>
             <a href="#maps">Maps</a>
           </li>

@@ -1,4 +1,13 @@
-.header {
+/* Allgemeine Stile */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Header */
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -7,73 +16,82 @@
     border-bottom: 1px solid #ddd;
   }
   
+  .header h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
   .back-button {
     background: none;
     border: none;
-    font-size: 18px;
+    font-size: 1.2rem;
     cursor: pointer;
   }
   
   .options-menu {
-    font-size: 24px;
+    font-size: 1.5rem;
     cursor: pointer;
   }
-
-  .map-container {
-    flex-grow: 1;
-    position: relative;
+  
+  /* Filter Section */
+  .filter-section {
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    transition: max-height 0.3s ease;
   }
   
-  .map-placeholder {
-    width: 100%;
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  
+  .filter-header p {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  
+  .toggle-button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 15px;
+    gap: 10px;
+  }
+  
+  .filter-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .filter-button.active {
+    background-color: #9ecaf5;
+    color: white;
+  }
+  
+  /* Map Section */
+  .map-container {
+    height: calc(100vh - 150px);
+    background-color: #e0e0e0;
+  }
+  
+  .map-view {
     height: 100%;
-    background-color: #eaeaea;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
-    color: #888;
-  }
-
-  .footer-menu {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
-    background-color: #ffffff;
-    border-top: 1px solid #ddd;
-  }
-  
-  .menu-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .menu-icon {
-    width: 40px;
-    height: 40px;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    margin-bottom: 5px;
-  }
-  
-  .guide-icon {
-    background-color: #9ecaf5;
-  }
-  
-  .animals-icon {
-    background-color: #a5e6b8;
-  }
-  
-  .info-icon {
-    background-color: #f5b49e;
-  }
-  
-  .ticket-icon {
-    background-color: #c8a5f5;
+    color: #555;
   }
   

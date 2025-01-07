@@ -1,0 +1,31 @@
+.ticket-overview-container {
+    width: 60%;
+    margin: 20px auto;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+  
+  li {
+    font-size: 1.1em;
+    margin: 5px 0;
+  }
+  
+  h4 {
+    margin-top: 15px;
+    color: #444;
+  }
+  
