@@ -40,13 +40,16 @@ export default function Home({ loggedInUser, setLoggedInUser }) {
         </ul>
         <h3>EVENTS</h3>
         <ul>
-          <li><Link to="/tourHome">Map</Link></li>
-          <li><Link to="/tourHome">View Animals</Link></li>
           <li>
-            <a href="#maps">Maps</a>
+            <Link to="/tourHome">Map</Link>
           </li>
           <li>
-            <a href="#view-animals">View animals</a>
+            <Link to="/tourHome">View Animals</Link>
+          </li>
+          <li>
+          <Link to="/ticket" >
+            Tickets
+          </Link>
           </li>
         </ul>
       </div>
@@ -55,7 +58,9 @@ export default function Home({ loggedInUser, setLoggedInUser }) {
         <h1>Zoo Zürich</h1>
         <p>Explore exotic animals in our futuristic Tour</p>
         <div className="tourBtn">
-          <Link to="tour" className="purchase-button">Zur Tour</Link>
+          <Link to="tour" className="purchase-button">
+            Zur Tour
+          </Link>
         </div>
       </div>
 
