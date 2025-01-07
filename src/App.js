@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React from "react";
 import "./App.css";
-import Login from "./components/Login/Login.js"
 import Home from "./components/home/home";
 import UserAuth from "./components/Auth/userAuth";
 import Tour from "./components/tour/tour.js";
@@ -16,8 +14,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* Define Routes for navigation */}
-      <div>
         <Routes>
           {/* Home Page */}
           <Route
