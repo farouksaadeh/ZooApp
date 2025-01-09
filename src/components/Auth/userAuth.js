@@ -115,10 +115,11 @@ function UserAuth({ setLoggedInUser }) {
               onSubmit={handleSubmit}
               className="auth-form auth-sign-in-form"
             >
-              <div className="auth-logo">
+              <div className="auth-logo" onClick={() => navigate("/")}>
                 <img src={darkLogo} alt="easyclass" />
                 <h4>Zoo Züri</h4>
               </div>
+
               <div className="auth-heading">
                 <h2>Willkommen!</h2>
                 <h6>Noch kein Konto?</h6>
@@ -161,7 +162,7 @@ function UserAuth({ setLoggedInUser }) {
               className="auth-form auth-sign-up-form"
               onSubmit={handleSubmit}
             >
-              <div className="auth-logo">
+              <div className="auth-logo" onClick={() => navigate("/")}>
                 <img src={darkLogo} alt="easyclass" />
                 <h4>Zoo Züri</h4>
               </div>

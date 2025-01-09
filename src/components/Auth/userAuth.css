@@ -76,6 +76,7 @@ input {
 .auth-logo {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .auth-logo img {

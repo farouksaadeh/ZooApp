@@ -41,6 +41,13 @@
       "email": "Nemanja@hotmail.com",
       "password": "Nemanja@hotmail.com",
       "role": "customer"
+    },
+    {
+      "id": "f91b",
+      "name": "Nemanja Test",
+      "email": "max@example.com",
+      "password": "max@example.com",
+      "role": "customer"
     }
   ]
 }
