@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import './Ticket.css';
 
 const Ticket = () => {
-  const [ticketCount, setTicketCount] = useState(1);
   const [cart, setCart] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const ticketPrices = [
     { _id: 1, name: 'Erwachsene (ab 21 Jahren)', onlinePrice: 27, kioskPrice: 28 },
@@ -11,40 +11,74 @@ const Ticket = () => {
     { _id: 3, name: 'Kinder (6-15 Jahre)', onlinePrice: 14, kioskPrice: 15 },
   ];
 
+  // Lade den Warenkorb aus dem LocalStorage
   useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
+    const savedCart = localStorage.getItem("cart");
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
   }, []);
 
+  // Speichere den Warenkorb im LocalStorage
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
+    if (cart.length > 0) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
   }, [cart]);
 
+  // Ticket zum Warenkorb hinzufügen
   const addToCart = (ticket) => {
-    const existingItemIndex = cart.findIndex((item) => item.type === ticket.name);
+    setCart((prevCart) => {
+      const existingItemIndex = prevCart.findIndex(
+        (item) => item.type === ticket.name
+      );
 
-    if (existingItemIndex > -1) {
-      setCart((prevCart) => {
-        const updatedCart = [...prevCart];
-        updatedCart[existingItemIndex].count += 1;
-        return updatedCart;
-      });
-    } else {
-      setCart((prevCart) => [
-        ...prevCart,
-        { type: ticket.name, count: 1, price: ticket.onlinePrice },
-      ]);
-    }
+      let updatedCart;
+      if (existingItemIndex > -1) {
+        // Wenn das Ticket bereits im Warenkorb ist, wird die Anzahl erhöht
+        updatedCart = prevCart.map((item, index) =>
+          index === existingItemIndex
+            ? { ...item, count: item.count + 1 }
+            : item
+        );
+      } else {
+        // Wenn das Ticket noch nicht im Warenkorb ist, wird es hinzugefügt
+        updatedCart = [
+          ...prevCart,
+          { type: ticket.name, count: 1, price: ticket.onlinePrice },
+        ];
+      }
+
+      return updatedCart;
+    });
   };
 
-  const removeFromCart = (index) => {
-    setCart((prevCart) => prevCart.filter((_, i) => i !== index));
+  // Anzahl der Tickets im Warenkorb aktualisieren
+  const updateTicketCount = (index, delta) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((item, idx) =>
+        idx === index
+          ? {
+              ...item,
+              count: Math.max(item.count + delta, 0), // Stellen sicher, dass die Anzahl nicht negativ wird
+            }
+          : item
+      );
+      // Entferne das Ticket, wenn die Anzahl auf 0 reduziert wurde
+      return updatedCart.filter((item) => item.count > 0);
+    });
   };
 
+  // Gesamtsumme berechnen
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price * item.count, 0);
+  };
+
+  // Handle den Kauf
+  const handlePurchase = () => {
+    setShowModal(true);
+    setCart([]); // Warenkorb leeren
+    localStorage.removeItem("cart"); // Leere auch den LocalStorage
   };
 
   return (
@@ -78,12 +112,10 @@ const Ticket = () => {
           {cart.map((item, index) => (
             <li key={index} className="cart-item">
               {item.count} x {item.type} - CHF {(item.price * item.count).toFixed(2)}
-              <button
-                className="remove-button"
-                onClick={() => removeFromCart(index)}
-              >
-                Entfernen
-              </button>
+              <div>
+                <button onClick={() => updateTicketCount(index, -1)}>-</button>
+                <button onClick={() => updateTicketCount(index, 1)}>+</button>
+              </div>
             </li>
           ))}
         </ul>
@@ -92,6 +124,17 @@ const Ticket = () => {
       <div className="cart-total">
         <h4>Gesamtsumme: CHF {calculateTotal().toFixed(2)}</h4>
       </div>
+
+      <button onClick={handlePurchase} className="add-to-cart-button">
+        Kaufen
+      </button>
+
+      {showModal && (
+        <div className="modal">
+          <p>Danke für Ihren Einkauf!</p>
+          <button onClick={() => setShowModal(false)}>Schließen</button>
+        </div>
+      )}
     </div>
   );
 };

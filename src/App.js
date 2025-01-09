@@ -3,8 +3,6 @@ import "./App.css";
 import Login from "./components/Login/Login.js";
 import Home from "./components/home/home";
 import Ticket from "./components/Ticket/Ticket.js";
-import TicketDetail from "./components/Ticket/TicketDetails.jsx";
-import TicketOverview from "./components/Ticket/TicketOverview.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
