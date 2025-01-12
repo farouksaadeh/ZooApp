@@ -1,22 +1,32 @@
-import React from "react";
-import "./App.css";
-import Login from "./components/Login/Login.js";
-import Home from "./components/home/home";
-import Ticket from "./components/Ticket/Ticket.js";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./components/home/home";
+import UserAuth from "./components/Auth/userAuth";
+import Tour from "./components/tour/tour.js";
+
+
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
   return (
     <Router>
-      <div className="App">
-        {/* Define Routes for navigation */}
+      <div>
         <Routes>
-          {/* Home Page */}
-          <Route path="/" element={<Home />} />
-          {/* Login Page */}
-          <Route path="/login" element={<Login />} />
-          {/* Ticket Page */}
-          <Route path="/ticket" element={<Ticket />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                loggedInUser={loggedInUser}
+                setLoggedInUser={setLoggedInUser}
+              />
+            }
+          />
+          <Route
+            path="/auth"
+            element={<UserAuth setLoggedInUser={setLoggedInUser} />}
+          />
+          <Route path="/tour" element={<Tour />} />
         </Routes>
       </div>
     </Router>
