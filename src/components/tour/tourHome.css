@@ -56,6 +56,17 @@ body {
   border-radius: 10px;
 }
 
+.map-container {
+  flex: 1; /* Nimmt den gesamten verbleibenden Platz ein */
+  display: flex;
+}
+
+.map-view {
+  height: 100%; /* Füllt die Höhe des Containers */
+  width: 100%; /* Füllt die Breite des Containers */
+}
+
+
 .hero-text h2 {
   font-size: 2rem;
   margin: 0;
@@ -130,3 +141,4 @@ body {
   font-size: 0.9rem;
   color: #333;
 }
+

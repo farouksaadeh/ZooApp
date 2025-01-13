@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 import "./tour.css";
 
 function Tour() {
   const [selectedFilter, setSelectedFilter] = useState("");
   const [isFilterExpanded, setIsFilterExpanded] = useState(true);
+
+  // Koordinaten und Beschreibungen für die Map
+  const zooPosition = [47.3855, 8.5736]; // Zürich Zoo Koordinaten
+  const otherPoints = [
+    { position: [47.3845, 8.5756], description: "Elefantenhaus", type: "animals" },
+    { position: [47.3865, 8.5726], description: "Löwengehege", type: "animals" },
+    { position: [47.3875, 8.5746], description: "Pinguinanlage", type: "animals" },
+    { position: [47.3850, 8.5730], description: "Restaurant", type: "food" },
+    { position: [47.3860, 8.5735], description: "Shop", type: "shop" },
+  ];
 
   const handleFilterClick = (filter) => {
     setSelectedFilter(filter);
@@ -79,10 +91,28 @@ function Tour() {
         )}
       </div>
 
+      {/* Map Section */}
       <div className="map-container">
-        <div className="map-view">
-          <p>Map goes here</p>
-        </div>
+        <MapContainer center={zooPosition} zoom={15} className="map-view" scrollWheelZoom={false}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+
+          {/* Hauptmarker für den Zoo */}
+          <Marker position={zooPosition}>
+            <Popup>Zürich Zoo - Willkommen!</Popup>
+          </Marker>
+
+          {/* Zusätzliche Marker basierend auf Filter */}
+          {otherPoints
+            .filter((point) => selectedFilter === "" || point.type === selectedFilter)
+            .map((point, index) => (
+              <Marker key={index} position={point.position}>
+                <Popup>{point.description}</Popup>
+              </Marker>
+            ))}
+        </MapContainer>
       </div>
     </div>
   );
