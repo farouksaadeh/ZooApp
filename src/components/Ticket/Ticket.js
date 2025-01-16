@@ -1,30 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import './Ticket.css';
 
 const Ticket = () => {
   const [cart, setCart] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const ticketPrices = [
     { _id: 1, name: 'Erwachsene (ab 21 Jahren)', onlinePrice: 27, kioskPrice: 28 },
     { _id: 2, name: 'Jugendliche (16-20 Jahre)', onlinePrice: 22, kioskPrice: 23 },
     { _id: 3, name: 'Kinder (6-15 Jahre)', onlinePrice: 14, kioskPrice: 15 },
   ];
-
-  // Lade den Warenkorb aus dem LocalStorage
-  useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
-
-  // Speichere den Warenkorb im LocalStorage
-  useEffect(() => {
-    if (cart.length > 0) {
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
-  }, [cart]);
 
   // Ticket zum Warenkorb hinzufügen
   const addToCart = (ticket) => {
@@ -35,14 +23,12 @@ const Ticket = () => {
 
       let updatedCart;
       if (existingItemIndex > -1) {
-        // Wenn das Ticket bereits im Warenkorb ist, wird die Anzahl erhöht
         updatedCart = prevCart.map((item, index) =>
           index === existingItemIndex
             ? { ...item, count: item.count + 1 }
             : item
         );
       } else {
-        // Wenn das Ticket noch nicht im Warenkorb ist, wird es hinzugefügt
         updatedCart = [
           ...prevCart,
           { type: ticket.name, count: 1, price: ticket.onlinePrice },
@@ -53,32 +39,40 @@ const Ticket = () => {
     });
   };
 
-  // Anzahl der Tickets im Warenkorb aktualisieren
-  const updateTicketCount = (index, delta) => {
-    setCart((prevCart) => {
-      const updatedCart = prevCart.map((item, idx) =>
-        idx === index
-          ? {
-              ...item,
-              count: Math.max(item.count + delta, 0), // Stellen sicher, dass die Anzahl nicht negativ wird
-            }
-          : item
-      );
-      // Entferne das Ticket, wenn die Anzahl auf 0 reduziert wurde
-      return updatedCart.filter((item) => item.count > 0);
-    });
-  };
-
   // Gesamtsumme berechnen
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price * item.count, 0);
   };
 
-  // Handle den Kauf
+  // Kauf abschließen, zeige E-Mail-Formular an
   const handlePurchase = () => {
-    setShowModal(true);
-    setCart([]); // Warenkorb leeren
-    localStorage.removeItem("cart"); // Leere auch den LocalStorage
+    setShowEmailForm(true); // Zeigt das E-Mail Formular an
+  };
+
+  // E-Mail-Adresse speichern und an Backend senden
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+
+    if (userEmail) {
+      // E-Mail an Backend senden
+      axios.post("http://localhost:5500/send-email", {
+        email: userEmail,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          alert(`Tickets werden an ${userEmail} gesendet.`);
+          setCart([]); // Leere den Warenkorb
+          setShowConfirmation(true); // Bestätigung anzeigen
+          setShowEmailForm(false); // E-Mail-Formular ausblenden
+        }
+      })
+      .catch((error) => {
+        console.error("Fehler beim Senden der E-Mail:", error);
+        alert("Fehler beim Senden der E-Mail.");
+      });
+    } else {
+      alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+    }
   };
 
   return (
@@ -112,10 +106,6 @@ const Ticket = () => {
           {cart.map((item, index) => (
             <li key={index} className="cart-item">
               {item.count} x {item.type} - CHF {(item.price * item.count).toFixed(2)}
-              <div>
-                <button onClick={() => updateTicketCount(index, -1)}>-</button>
-                <button onClick={() => updateTicketCount(index, 1)}>+</button>
-              </div>
             </li>
           ))}
         </ul>
@@ -129,10 +119,25 @@ const Ticket = () => {
         Kaufen
       </button>
 
-      {showModal && (
-        <div className="modal">
-          <p>Danke für Ihren Einkauf!</p>
-          <button onClick={() => setShowModal(false)}>Schließen</button>
+      {showEmailForm && (
+        <div className="email-form">
+          <h3>Bitte geben Sie Ihre E-Mail-Adresse ein</h3>
+          <form onSubmit={handleEmailSubmit}>
+            <input
+              type="email"
+              placeholder="E-Mail-Adresse"
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
+              required
+            />
+            <button type="submit">Bestätigen</button>
+          </form>
+        </div>
+      )}
+
+      {showConfirmation && (
+        <div className="confirmation-message">
+          <h4>Vielen Dank! Deine Tickets werden an die angegebene E-Mail-Adresse gesendet.</h4>
         </div>
       )}
     </div>

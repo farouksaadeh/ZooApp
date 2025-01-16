@@ -1,53 +1,82 @@
 {
+  "tickets": [
+    {
+      "_id": 1,
+      "name": "Erwachsene (ab 21 Jahren)",
+      "onlinePrice": 27
+    },
+    {
+      "_id": 2,
+      "name": "Jugendliche (16-20 Jahre)",
+      "onlinePrice": 22
+    },
+    {
+      "_id": 3,
+      "name": "Kinder (6-15 Jahre)",
+      "onlinePrice": 14
+    },
+    {
+      "_id": 4,
+      "name": "Senioren (ab 65 Jahren)",
+      "onlinePrice": 20
+    }
+  ],
   "customer": [
     {
       "name": "Max Mustermann",
       "email": "max@example.com",
       "password": "123456",
       "role": "customer",
-      "id": "29cc"
+      "id": "29cc",
+      "cart": []
     },
     {
-      "name": "Admdddin User",
+      "name": "Admin User",
       "email": "admin@example.com",
       "password": "admin123",
       "role": "admin",
-      "id": "4c2f"
+      "id": "4c2f",
+      "cart": []
     },
     {
       "id": "fffc",
       "name": "dwedw",
       "email": "wedwed@hotmai.com",
       "password": "wedewdew",
-      "role": "customer"
+      "role": "customer",
+      "cart": []
     },
     {
       "id": "9754",
       "name": "max@example.com",
       "email": "mssax@example.com",
       "password": "max@example.com",
-      "role": "customer"
+      "role": "customer",
+      "cart": []
     },
     {
       "id": "dca4",
       "name": "Farouk Saadeh",
       "email": "farouksaadeh@swisscom.com",
       "password": "Saadeh152007",
-      "role": "customer"
+      "role": "customer",
+      "cart": []
     },
     {
       "id": "f91b",
       "name": "Nemanja Test",
       "email": "Nemanja@hotmail.com",
       "password": "Nemanja@hotmail.com",
-      "role": "customer"
+      "role": "customer",
+      "cart": []
     },
     {
-      "id": "f91b",
+      "id": "f91c",
       "name": "Nemanja Test",
       "email": "max@example.com",
       "password": "max@example.com",
-      "role": "customer"
+      "role": "customer",
+      "cart": []
     }
   ]
 }
