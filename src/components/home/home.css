@@ -75,8 +75,27 @@
   color: #143217;
 }
 
+.tour-button {
+  margin-top: 15px;
+  padding: 12px 25px;
+  font-size: 18px;
+  color: white;
+  background-color: #143217;
+  border: 2px solid white;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tour-button:hover {
+  background-color: white;
+  color: #143217;
+}
+
+
 .tourBtn {
-  margin-top: 60px;
+  margin-top: 100px; /* Button weiter nach unten verschieben */
 }
 
 .login-button {

@@ -53,7 +53,12 @@ export default function Home({ loggedInUser, setLoggedInUser }) {
         <h1>Zoo Zürich</h1>
         <p>Explore exotic animals in our futuristic Tour</p>
         <div className="tourBtn">
-          <Link to="tour" className="purchase-button">Zur Tour</Link>
+          <Link to="tour" className="tour-button">Zur Tour</Link>
+        </div>
+        
+        {/* Neue Schaltfläche für den Ticketkauf */}
+        <div className="ticketBtn">
+          <Link to="/ticket" className="purchase-button">Ticket Kaufen</Link>
         </div>
       </div>
 
