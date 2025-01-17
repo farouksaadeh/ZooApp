@@ -48,6 +48,20 @@
       "email": "max@example.com",
       "password": "max@example.com",
       "role": "customer"
+    },
+    {
+      "id": "6cb4",
+      "name": "Jay Nagel Test",
+      "email": "jaynagel@hotmail.com",
+      "password": "JayJAy",
+      "role": "customer"
+    },
+    {
+      "id": "a3d6",
+      "name": "User Tester",
+      "email": "usertester@hotmail.com",
+      "password": "usertester",
+      "role": "customer"
     }
   ]
 }

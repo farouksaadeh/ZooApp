@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import "./home.css";
 import { Link } from "react-router-dom";
+import Hintergrundbild from "./assets/HintergrundbildHome.png";
+import monkey from "./assets/monkey.png";
+import line1 from "./assets/Line1.svg";
 
 export default function Home({ loggedInUser, setLoggedInUser }) {
   // Funktion für Logout
@@ -28,51 +31,70 @@ export default function Home({ loggedInUser, setLoggedInUser }) {
 
   return (
     <section className="home-section">
-      <div className="sidebar">
-        <h2>ZÜRI ZOO</h2>
-        <ul>
-          <li>
-            <a href="#faq">FAQ</a>
-          </li>
-          <li>
-            <a href="#contact">Contact</a>
-          </li>
-        </ul>
-        <h3>EVENTS</h3>
-        <ul>
-          <li>
-            <a href="#maps">Maps</a>
-          </li>
-          <li>
-            <a href="#view-animals">View animals</a>
-          </li>
-        </ul>
-      </div>
-      <div className="main-content">
-        <h4>Spotted in</h4>
-        <h1>Zoo Zürich</h1>
-        <p>Explore exotic animals in our futuristic Tour</p>
-        <div className="tourBtn">
-          <Link to="tour" className="purchase-button">Zur Tour</Link>
+      <img
+        src={Hintergrundbild}
+        alt="Hintergrund"
+        className="background-image"
+      />
+      <div className="overlay">
+        {/* Sidebar */}
+        <div className="sidebar">
+          <h2>ZÜRI ZOO</h2>
+          <ul>
+            <li>
+              <a href="#faq">FAQ</a>
+            </li>
+            <li>
+              <a href="#contact">Contact</a>
+            </li>
+          </ul>
+          <img src={line1} alt="Line Separator" className="line-separator" />
+          <h3>EVENTS</h3>
+          <ul>
+            <li>
+              <a href="#maps">Maps</a>
+            </li>
+            <li>
+              <a href="#view-animals">View animals</a>
+            </li>
+          </ul>
         </div>
-      </div>
 
-      {/* Login/Logout Button */}
-      <div className="user-section">
-        {loggedInUser ? (
-          <div className="logged-in-info">
-            <span className="user-name">
-              Welcome, <span className="bold-name">{loggedInUser.name}</span>!
-            </span>
-            <button className="logout-button" onClick={handleLogout}>
-              Logout
-            </button>
+        {/* Hauptbereich */}
+        <div className="main-content">
+          <h4>Spotted in</h4>
+          <h1 className="zoo-title">
+            Zoo <br />
+            Zürich
+          </h1>
+          <p>Explore exotic animals in our futuristic Tour</p>
+          <div className="tourBtn">
+            <Link to="/ticket" className="purchase-button">
+              PURCHASE TICKETS
+            </Link>
           </div>
-        ) : (
-          <Link to="/auth" className="login-button">
-            Login
-          </Link>
-        )}
+        </div>
+
+        {/* Affen-Bild */}
+        <img src={monkey} alt="Monkey" className="monkey-image" />
+
+        {/* Login/Logout Button */}
+        <div className="user-section">
+          {loggedInUser ? (
+            <div className="logged-in-info">
+              <span className="user-name">
+                Welcome, <span className="bold-name">{loggedInUser.name}</span>!
+              </span>
+              <button className="logout-button" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to="/auth" className="login-button">
+              Login
+            </Link>
+          )}
+        </div>
       </div>
     </section>
   );
