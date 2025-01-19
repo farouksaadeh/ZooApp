@@ -16,8 +16,8 @@ export default function Home() {
         </ul>
         <h3>EVENTS</h3>
         <ul>
-          <li><a href="#maps">Maps</a></li>
-          <li><a href="#view-animals">View animals</a></li>
+          <li><Link to="/tourHome">Map</Link></li>
+          <li><Link to="/tourHome">View Animals</Link></li>
         </ul>
       </div>
       <div className="main-content">
