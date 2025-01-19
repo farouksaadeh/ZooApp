@@ -1,41 +1,36 @@
-// TicketInfo.js
-
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const TicketInfo = () => {
-  const { ticketId } = useParams(); // Holt die ticketId aus der URL
+  const { ticketId } = useParams(); // Hole die ticketId aus der URL
   const [ticketInfo, setTicketInfo] = useState(null);
 
   useEffect(() => {
-    // API-Anfrage an das Backend, um die Ticketdaten zu holen
-    axios.get(`http://localhost:5500/api/ticket-info/${ticketId}`)
+    // Hole die Ticketinformationen vom Backend
+    axios.get(`http://192.168.43.1:5500/ticket-info/${ticketId}`)  // Deine öffentliche IP-Adresse hier
       .then((response) => {
-        setTicketInfo(response.data); // Speichert die Ticketdaten im State
+        setTicketInfo(response.data);
       })
       .catch((error) => {
         console.error("Fehler beim Laden der Ticketdaten:", error);
       });
-  }, [ticketId]); // Lädt die Daten bei Änderung der ticketId
+  }, [ticketId]);
 
   if (!ticketInfo) {
-    return <div>Lädt...</div>; // Zeige Ladeanzeige an
+    return <div>Wird geladen...</div>;
   }
 
   return (
     <div className="ticket-info-container">
-      <h2>Vielen Dank für Ihren Besuch im Zoo!</h2>
-      <p>Ticketinhaber: {ticketInfo.firstName} {ticketInfo.lastName}</p>
-      <p>Bestellübersicht:</p>
+      <h2>Ticketdetails für {ticketInfo.firstName} {ticketInfo.lastName}</h2>
+      <p><strong>Ticketnummer:</strong> {ticketInfo.uniqueTicketId}</p>
       <ul>
         {ticketInfo.tickets.map((ticket, index) => (
-          <li key={index}>
-            {ticket.count} x {ticket.type} - CHF {(ticket.count * ticket.price).toFixed(2)}
-          </li>
+          <li key={index}>{ticket.count} x {ticket.type} - CHF {(ticket.count * ticket.price).toFixed(2)}</li>
         ))}
       </ul>
-      <p><strong>Gesamtsumme: CHF {ticketInfo.total.toFixed(2)}</strong></p>
+      <p><strong>Gesamtsumme: CHF {ticketInfo.total}</strong></p>
     </div>
   );
 };

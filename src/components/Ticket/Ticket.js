@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import QRCode from "qrcode"; // QR-Code-Modul importieren
 import './Ticket.css';
 
 const Ticket = () => {
@@ -54,29 +55,40 @@ const Ticket = () => {
     }
   };
 
-  const handleEmailSubmit = (e) => {
+  const handleEmailSubmit = async (e) => {
     e.preventDefault();
 
     if (userEmail && userFirstName && userLastName) {
-      axios.post("http://192.168.1.125:5500/send-email", { // Hier deine IP-Adresse eintragen
-        email: userEmail,
-        firstName: userFirstName,
-        lastName: userLastName,
-        tickets: cart,
-        total: calculateTotal().toFixed(2),
-      })
-        .then((response) => {
-          if (response.status === 200) {
-            alert(`Tickets werden an ${userEmail} gesendet.`);
-            setCart([]);
-            setShowConfirmation(true);
-            setShowEmailForm(false);
-          }
-        })
-        .catch((error) => {
-          console.error("Fehler beim Senden der E-Mail:", error);
-          alert("Fehler beim Senden der E-Mail.");
+      try {
+        // QR-Code-Daten vorbereiten
+        const qrData = {
+          name: `${userFirstName} ${userLastName}`,
+          email: userEmail,
+          tickets: cart.map((item) => `${item.count}x ${item.type}`).join(", "),
+          total: `CHF ${calculateTotal().toFixed(2)}`,
+        };
+
+        // QR-Code als Data URL generieren
+        const qrCodeUrl = await QRCode.toDataURL(JSON.stringify(qrData));
+
+        // Anfrage an das Backend senden
+        await axios.post("http://172.20.10.4:5500/send-email", {
+          email: userEmail,
+          firstName: userFirstName,
+          lastName: userLastName,
+          tickets: cart,
+          total: calculateTotal().toFixed(2),
+          qrCode: qrCodeUrl, // QR-Code wird weiterhin an das Backend gesendet
         });
+
+        alert(`Tickets und QR-Code werden an ${userEmail} gesendet.`);
+        setCart([]);
+        setShowConfirmation(true);
+        setShowEmailForm(false);
+      } catch (error) {
+        console.error("Fehler beim Senden der E-Mail:", error);
+        alert("Fehler beim Senden der E-Mail.");
+      }
     } else {
       setError('Bitte füllen Sie alle Felder aus.');
     }
