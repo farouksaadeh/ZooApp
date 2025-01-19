@@ -3,18 +3,22 @@ import "./tourHome.css";
 import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 
+// Fix für Leaflet-Standard-Icons
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+});
 
 function TourHome() {
-  const zooPosition = [47.3855, 8.5736]; // Zürich Zoo Koordinaten
-  const otherPoints = [
-    { position: [47.3845, 8.5756], description: "Elefantenhaus"},
-    { position: [47.3865, 8.5726], description: "Löwengehege"},
-    { position: [47.3875, 8.5746], description: "Pinguinanlage"},
-  ];
+  const zooPosition = [47.3843, 8.5743]; // Zürich Zoo Koordinaten
 
   return (
-    <div className="tour-home">
+    <div>
       <div className="header">
         <Link to="/">
           <button className="back-button">←</button>
@@ -24,30 +28,29 @@ function TourHome() {
       </div>
 
       <div className="map-container">
-        <MapContainer center={zooPosition} zoom={15} className="map-view" scrollWheelZoom={false}>
+        <MapContainer
+          center={zooPosition}
+          zoom={16}
+          className="map-view"
+          scrollWheelZoom={false}
+        >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
 
-          {/* Hauptmarker für den Zoo */}
           <Marker position={zooPosition}>
             <Popup>Zürich Zoo - Willkommen!</Popup>
           </Marker>
-
-          {/* Zusätzliche Marker */}
-          {otherPoints.map((point, index) => (
-            <Marker key={index} position={point.position} icon={point.icon}>
-              <Popup>{point.description}</Popup>
-            </Marker>
-          ))}
         </MapContainer>
       </div>
 
       <div className="footer-menu">
         <Link to="/tour">
           <button className="menu-item">
-            <div className="menu-icon guide-icon"></div>
+            <div className="menu-icon guide-icon">
+              <img src="./icons/shop-icon.png" alt="guide" />
+            </div>
             <span>Guide</span>
           </button>
         </Link>

@@ -2,21 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import otherPoints from "./otherpoints.js";
 import "./tour.css";
 
 function Tour() {
-  const [selectedFilter, setSelectedFilter] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState(true);
   const [isFilterExpanded, setIsFilterExpanded] = useState(true);
 
-  // Koordinaten und Beschreibungen für die Map
-  const zooPosition = [47.3855, 8.5736]; // Zürich Zoo Koordinaten
-  const otherPoints = [
-    { position: [47.3845, 8.5756], description: "Elefantenhaus", type: "animals" },
-    { position: [47.3865, 8.5726], description: "Löwengehege", type: "animals" },
-    { position: [47.3875, 8.5746], description: "Pinguinanlage", type: "animals" },
-    { position: [47.3850, 8.5730], description: "Restaurant", type: "food" },
-    { position: [47.3860, 8.5735], description: "Shop", type: "shop" },
-  ];
+  const zooPosition = [47.3843, 8.5743]; // Zürich Zoo Coordinates
 
   const handleFilterClick = (filter) => {
     setSelectedFilter(filter);
@@ -26,9 +19,15 @@ function Tour() {
     setIsFilterExpanded(!isFilterExpanded);
   };
 
+  const handleGoClick = (destination) => {
+    const [destLat, destLng] = destination;
+    const [zooLat, zooLng] = zooPosition;
+    const routeUrl = `https://www.google.com/maps/dir/${zooLat},${zooLng}/${destLat},${destLng}`;
+    window.open(routeUrl, "_blank");
+  };
+
   return (
     <div>
-      {/* Header */}
       <div className="header">
         <Link to="/tourHome">
           <button className="back-button">←</button>
@@ -37,52 +36,63 @@ function Tour() {
         <div className="options-menu">•••</div>
       </div>
 
-      {/* Filter Section */}
-      <div className={`filter-section ${isFilterExpanded ? "expanded" : "collapsed"}`}>
+      <div
+        className={`filter-section ${
+          isFilterExpanded ? "expanded" : "collapsed"
+        }`}
+      >
         <div className="filter-header" onClick={toggleFilter}>
           <p>Filter</p>
-          <button className="toggle-button">{isFilterExpanded ? "▲" : "▼"}</button>
+          <button className="toggle-button">
+            {isFilterExpanded ? "▲" : "▼"}
+          </button>
         </div>
         {isFilterExpanded && (
           <div className="filter-buttons">
             <button
-              className={`filter-button ${selectedFilter === "attraction" ? "active" : ""}`}
-              onClick={() => handleFilterClick("attraction")}
-            >
-              Attraction
-            </button>
-            <button
-              className={`filter-button ${selectedFilter === "toilet" ? "active" : ""}`}
-              onClick={() => handleFilterClick("toilet")}
-            >
-              Toilet
-            </button>
-            <button
-              className={`filter-button ${selectedFilter === "shop" ? "active" : ""}`}
-              onClick={() => handleFilterClick("shop")}
-            >
-              Shop
-            </button>
-            <button
-              className={`filter-button ${selectedFilter === "park" ? "active" : ""}`}
-              onClick={() => handleFilterClick("park")}
-            >
-              Park
-            </button>
-            <button
-              className={`filter-button ${selectedFilter === "food" ? "active" : ""}`}
-              onClick={() => handleFilterClick("food")}
-            >
-              Food
-            </button>
-            <button
-              className={`filter-button ${selectedFilter === "animals" ? "active" : ""}`}
+              className={`filter-button ${
+                selectedFilter === "animals" ? "active" : ""
+              }`}
               onClick={() => handleFilterClick("animals")}
             >
               Animals
             </button>
             <button
-              className={`filter-button ${selectedFilter === "service_point" ? "active" : ""}`}
+              className={`filter-button ${
+                selectedFilter === "toilet" ? "active" : ""
+              }`}
+              onClick={() => handleFilterClick("toilet")}
+            >
+              Toilet
+            </button>
+            <button
+              className={`filter-button ${
+                selectedFilter === "shop" ? "active" : ""
+              }`}
+              onClick={() => handleFilterClick("shop")}
+            >
+              Shop
+            </button>
+            <button
+              className={`filter-button ${
+                selectedFilter === "food" ? "active" : ""
+              }`}
+              onClick={() => handleFilterClick("food")}
+            >
+              Food
+            </button>
+            <button
+              className={`filter-button ${
+                selectedFilter === "park" ? "active" : ""
+              }`}
+              onClick={() => handleFilterClick("park")}
+            >
+              Park
+            </button>
+            <button
+              className={`filter-button ${
+                selectedFilter === "service_point" ? "active" : ""
+              }`}
               onClick={() => handleFilterClick("service_point")}
             >
               Service Point
@@ -91,25 +101,40 @@ function Tour() {
         )}
       </div>
 
-      {/* Map Section */}
       <div className="map-container">
-        <MapContainer center={zooPosition} zoom={15} className="map-view" scrollWheelZoom={false}>
+        <MapContainer
+          center={zooPosition}
+          zoom={16.4}
+          className="map-view"
+          scrollWheelZoom={false}
+        >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
 
-          {/* Hauptmarker für den Zoo */}
-          <Marker position={zooPosition}>
-            <Popup>Zürich Zoo - Willkommen!</Popup>
-          </Marker>
-
-          {/* Zusätzliche Marker basierend auf Filter */}
           {otherPoints
-            .filter((point) => selectedFilter === "" || point.type === selectedFilter)
+            .filter(
+              (point) =>
+                selectedFilter === false || point.type === selectedFilter
+            )
             .map((point, index) => (
-              <Marker key={index} position={point.position}>
-                <Popup>{point.description}</Popup>
+              <Marker key={index} position={point.position} icon={point.icon}>
+                <Popup>
+                  <div className="popup-content">
+                    <h3>{point.description}</h3>
+                    <p>Distance: {point.distance}</p>
+                    <div className="popup-actions">
+                      <button
+                        className="popup-button"
+                        onClick={() => handleGoClick(point.position)}
+                      >
+                        Go
+                      </button>
+                      <button className="popup-button">See Details</button>
+                    </div>
+                  </div>
+                </Popup>
               </Marker>
             ))}
         </MapContainer>
