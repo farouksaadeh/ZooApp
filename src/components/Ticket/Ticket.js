@@ -6,15 +6,17 @@ const Ticket = () => {
   const [cart, setCart] = useState([]);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [userFirstName, setUserFirstName] = useState('');
+  const [userLastName, setUserLastName] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [error, setError] = useState(null);
 
   const ticketPrices = [
-    { _id: 1, name: 'Erwachsene (ab 21 Jahren)', onlinePrice: 27, kioskPrice: 28 },
-    { _id: 2, name: 'Jugendliche (16-20 Jahre)', onlinePrice: 22, kioskPrice: 23 },
-    { _id: 3, name: 'Kinder (6-15 Jahre)', onlinePrice: 14, kioskPrice: 15 },
+    { _id: 1, name: 'Erwachsener (ab 21 Jahren)', onlinePrice: 27 },
+    { _id: 2, name: 'Jugendlicher (16-20 Jahre)', onlinePrice: 22 },
+    { _id: 3, name: 'Kind (6-15 Jahre)', onlinePrice: 14 },
   ];
 
-  // Ticket zum Warenkorb hinzufügen
   const addToCart = (ticket) => {
     setCart((prevCart) => {
       const existingItemIndex = prevCart.findIndex(
@@ -39,39 +41,44 @@ const Ticket = () => {
     });
   };
 
-  // Gesamtsumme berechnen
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price * item.count, 0);
   };
 
-  // Kauf abschließen, zeige E-Mail-Formular an
   const handlePurchase = () => {
-    setShowEmailForm(true); // Zeigt das E-Mail Formular an
+    if (cart.length === 0) {
+      setError('Bitte wählen Sie mindestens ein Ticket aus.');
+    } else {
+      setShowEmailForm(true);
+      setError(null);
+    }
   };
 
-  // E-Mail-Adresse speichern und an Backend senden
   const handleEmailSubmit = (e) => {
     e.preventDefault();
 
-    if (userEmail) {
-      // E-Mail an Backend senden
-      axios.post("http://localhost:5500/send-email", {
+    if (userEmail && userFirstName && userLastName) {
+      axios.post("http://192.168.1.125:5500/send-email", { // Hier deine IP-Adresse eintragen
         email: userEmail,
+        firstName: userFirstName,
+        lastName: userLastName,
+        tickets: cart,
+        total: calculateTotal().toFixed(2),
       })
-      .then((response) => {
-        if (response.status === 200) {
-          alert(`Tickets werden an ${userEmail} gesendet.`);
-          setCart([]); // Leere den Warenkorb
-          setShowConfirmation(true); // Bestätigung anzeigen
-          setShowEmailForm(false); // E-Mail-Formular ausblenden
-        }
-      })
-      .catch((error) => {
-        console.error("Fehler beim Senden der E-Mail:", error);
-        alert("Fehler beim Senden der E-Mail.");
-      });
+        .then((response) => {
+          if (response.status === 200) {
+            alert(`Tickets werden an ${userEmail} gesendet.`);
+            setCart([]);
+            setShowConfirmation(true);
+            setShowEmailForm(false);
+          }
+        })
+        .catch((error) => {
+          console.error("Fehler beim Senden der E-Mail:", error);
+          alert("Fehler beim Senden der E-Mail.");
+        });
     } else {
-      alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+      setError('Bitte füllen Sie alle Felder aus.');
     }
   };
 
@@ -83,10 +90,7 @@ const Ticket = () => {
           <div key={ticket._id} className="ticket-item">
             <div className="ticket-info">
               <h3>{ticket.name}</h3>
-              <p>
-                Online: CHF {ticket.onlinePrice.toFixed(2)} /
-                Kasse: CHF {ticket.kioskPrice.toFixed(2)}
-              </p>
+              <p>Online: CHF {ticket.onlinePrice.toFixed(2)}</p>
             </div>
             <button
               onClick={() => addToCart(ticket)}
@@ -119,10 +123,30 @@ const Ticket = () => {
         Kaufen
       </button>
 
+      {error && (
+        <div className="error-message">
+          <p>{error}</p>
+        </div>
+      )}
+
       {showEmailForm && (
         <div className="email-form">
-          <h3>Bitte geben Sie Ihre E-Mail-Adresse ein</h3>
+          <h3>Bitte geben Sie Ihre Daten ein</h3>
           <form onSubmit={handleEmailSubmit}>
+            <input
+              type="text"
+              placeholder="Vorname"
+              value={userFirstName}
+              onChange={(e) => setUserFirstName(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Nachname"
+              value={userLastName}
+              onChange={(e) => setUserLastName(e.target.value)}
+              required
+            />
             <input
               type="email"
               placeholder="E-Mail-Adresse"
