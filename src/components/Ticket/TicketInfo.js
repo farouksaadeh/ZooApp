@@ -8,11 +8,11 @@ const TicketInfo = () => {
 
   useEffect(() => {
     // Hole die Ticketinformationen vom Backend
-    axios.get(`http://192.168.43.1:5500/ticket-info/${ticketId}`)  // Deine öffentliche IP-Adresse hier
-      .then((response) => {
+    axios.get(`http://localhost:5500/ticket-info/${ticketId}`)
+      .then(response => {
         setTicketInfo(response.data);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error("Fehler beim Laden der Ticketdaten:", error);
       });
   }, [ticketId]);
@@ -23,8 +23,9 @@ const TicketInfo = () => {
 
   return (
     <div className="ticket-info-container">
-      <h2>Ticketdetails für {ticketInfo.firstName} {ticketInfo.lastName}</h2>
-      <p><strong>Ticketnummer:</strong> {ticketInfo.uniqueTicketId}</p>
+      <h2>Vielen Dank, dass Sie den Zoo besucht haben!</h2>
+      <p>Ticketinhaber: {ticketInfo.firstName} {ticketInfo.lastName}</p>
+      <p>Bestellübersicht:</p>
       <ul>
         {ticketInfo.tickets.map((ticket, index) => (
           <li key={index}>{ticket.count} x {ticket.type} - CHF {(ticket.count * ticket.price).toFixed(2)}</li>

@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 import QRCode from "qrcode"; // QR-Code-Modul importieren
-import './Ticket.css';
+import "./Ticket.css";
 
 const Ticket = () => {
   const [cart, setCart] = useState([]);
   const [showEmailForm, setShowEmailForm] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
-  const [userFirstName, setUserFirstName] = useState('');
-  const [userLastName, setUserLastName] = useState('');
+  const [userEmail, setUserEmail] = useState("");
+  const [userFirstName, setUserFirstName] = useState("");
+  const [userLastName, setUserLastName] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [error, setError] = useState(null);
 
   const ticketPrices = [
-    { _id: 1, name: 'Erwachsener (ab 21 Jahren)', onlinePrice: 27 },
-    { _id: 2, name: 'Jugendlicher (16-20 Jahre)', onlinePrice: 22 },
-    { _id: 3, name: 'Kind (6-15 Jahre)', onlinePrice: 14 },
+    { _id: 1, name: "Erwachsener (ab 21 Jahren)", onlinePrice: 27 },
+    { _id: 2, name: "Jugendlicher (16-20 Jahre)", onlinePrice: 22 },
+    { _id: 3, name: "Kind (6-15 Jahre)", onlinePrice: 14 },
   ];
 
   const addToCart = (ticket) => {
@@ -48,7 +48,7 @@ const Ticket = () => {
 
   const handlePurchase = () => {
     if (cart.length === 0) {
-      setError('Bitte wählen Sie mindestens ein Ticket aus.');
+      setError("Bitte wählen Sie mindestens ein Ticket aus.");
     } else {
       setShowEmailForm(true);
       setError(null);
@@ -60,25 +60,13 @@ const Ticket = () => {
 
     if (userEmail && userFirstName && userLastName) {
       try {
-        // QR-Code-Daten vorbereiten
-        const qrData = {
-          name: `${userFirstName} ${userLastName}`,
-          email: userEmail,
-          tickets: cart.map((item) => `${item.count}x ${item.type}`).join(", "),
-          total: `CHF ${calculateTotal().toFixed(2)}`,
-        };
-
-        // QR-Code als Data URL generieren
-        const qrCodeUrl = await QRCode.toDataURL(JSON.stringify(qrData));
-
         // Anfrage an das Backend senden
-        await axios.post("http://172.20.10.4:5500/send-email", {
+        await axios.post("http://localhost:5500/send-email", {
           email: userEmail,
           firstName: userFirstName,
           lastName: userLastName,
           tickets: cart,
           total: calculateTotal().toFixed(2),
-          qrCode: qrCodeUrl, // QR-Code wird weiterhin an das Backend gesendet
         });
 
         alert(`Tickets und QR-Code werden an ${userEmail} gesendet.`);
@@ -90,7 +78,7 @@ const Ticket = () => {
         alert("Fehler beim Senden der E-Mail.");
       }
     } else {
-      setError('Bitte füllen Sie alle Felder aus.');
+      setError("Bitte füllen Sie alle Felder aus.");
     }
   };
 
@@ -172,8 +160,8 @@ const Ticket = () => {
       )}
 
       {showConfirmation && (
-        <div className="confirmation-message">
-          <h4>Vielen Dank! Deine Tickets werden an die angegebene E-Mail-Adresse gesendet.</h4>
+        <div className="confirmation">
+          <h3>Vielen Dank für Ihren Einkauf!</h3>
         </div>
       )}
     </div>
