@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 import QRCode from "qrcode"; // QR-Code-Modul importieren
-import "./Ticket.css";
+import './Ticket.css';
 
 const Ticket = () => {
   const [cart, setCart] = useState([]);
   const [showEmailForm, setShowEmailForm] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
-  const [userFirstName, setUserFirstName] = useState("");
-  const [userLastName, setUserLastName] = useState("");
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [userFirstName, setUserFirstName] = useState('');
+  const [userLastName, setUserLastName] = useState('');
+  const [qrCodes, setQRCodes] = useState([]); // Array für mehrere QR-Codes
   const [error, setError] = useState(null);
 
   const ticketPrices = [
-    { _id: 1, name: "Erwachsener (ab 21 Jahren)", onlinePrice: 27 },
-    { _id: 2, name: "Jugendlicher (16-20 Jahre)", onlinePrice: 22 },
-    { _id: 3, name: "Kind (6-15 Jahre)", onlinePrice: 14 },
+    { _id: 1, name: 'Erwachsener (ab 21 Jahren)', onlinePrice: 27 },
+    { _id: 2, name: 'Jugendlicher (16-20 Jahre)', onlinePrice: 22 },
+    { _id: 3, name: 'Kind (6-15 Jahre)', onlinePrice: 14 },
   ];
 
   const addToCart = (ticket) => {
@@ -48,7 +48,7 @@ const Ticket = () => {
 
   const handlePurchase = () => {
     if (cart.length === 0) {
-      setError("Bitte wählen Sie mindestens ein Ticket aus.");
+      setError('Bitte wählen Sie mindestens ein Ticket aus.');
     } else {
       setShowEmailForm(true);
       setError(null);
@@ -60,25 +60,46 @@ const Ticket = () => {
 
     if (userEmail && userFirstName && userLastName) {
       try {
-        // Anfrage an das Backend senden
+        const generatedQRCodes = []; // Array für QR-Code-URLs
+
+        // Für jedes Ticket in der Bestellung QR-Codes generieren
+        for (const item of cart) {
+          for (let i = 0; i < item.count; i++) {
+            const qrData = {
+              name: `${userFirstName} ${userLastName}`,
+              email: userEmail,
+              ticketType: item.type,
+              ticketNumber: `${i + 1}/${item.count}`, // Ticketnummer anzeigen
+              total: `CHF ${calculateTotal().toFixed(2)}`,
+            };
+
+            const qrCodeUrl = await QRCode.toDataURL(JSON.stringify(qrData));
+            generatedQRCodes.push({ url: qrCodeUrl, type: item.type }); // QR-Code mit Ticketart speichern
+          }
+        }
+
+        setQRCodes(generatedQRCodes); // QR-Codes für das Frontend setzen
+
+        // Anfrage an das Backend senden (für die E-Mail)
         await axios.post("http://localhost:5500/send-email", {
           email: userEmail,
           firstName: userFirstName,
           lastName: userLastName,
           tickets: cart,
           total: calculateTotal().toFixed(2),
+          qrCodes: generatedQRCodes, // Alle QR-Codes senden
         });
 
-        alert(`Tickets und QR-Code werden an ${userEmail} gesendet.`);
-        setCart([]);
-        setShowConfirmation(true);
-        setShowEmailForm(false);
+        alert(`Tickets und QR-Codes wurden an ${userEmail} gesendet.`);
+        setCart([]); // Warenkorb leeren
+        setShowEmailForm(false); // E-Mail-Formular ausblenden
+        setError(null);
       } catch (error) {
         console.error("Fehler beim Senden der E-Mail:", error);
         alert("Fehler beim Senden der E-Mail.");
       }
     } else {
-      setError("Bitte füllen Sie alle Felder aus.");
+      setError('Bitte füllen Sie alle Felder aus.');
     }
   };
 
@@ -159,9 +180,18 @@ const Ticket = () => {
         </div>
       )}
 
-      {showConfirmation && (
-        <div className="confirmation">
-          <h3>Vielen Dank für Ihren Einkauf!</h3>
+      {qrCodes.length > 0 && (
+        <div className="qr-code-container">
+          <h3>Ihre QR-Codes</h3>
+          <div className="qr-code-row">
+            {qrCodes.map((qr, index) => (
+              <div key={index} className="qr-code-item">
+                <img src={qr.url} alt={`QR Code für ${qr.type}`} />
+                <p>{qr.type}</p>
+              </div>
+            ))}
+          </div>
+          <p>Speichern Sie diese QR-Codes für Ihren Ticketzugang.</p>
         </div>
       )}
     </div>

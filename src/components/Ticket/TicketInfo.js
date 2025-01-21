@@ -1,37 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const TicketInfo = () => {
-  const { ticketId } = useParams(); // Hole die ticketId aus der URL
-  const [ticketInfo, setTicketInfo] = useState(null);
+  const { ticketId } = useParams(); // Extrahiere ticketId aus der URL
+  const [ticketData, setTicketData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Hole die Ticketinformationen vom Backend
-    axios.get(`http://localhost:5500/ticket-info/${ticketId}`)
-      .then(response => {
-        setTicketInfo(response.data);
+    // Ticketinformationen von der API abrufen
+    axios.get(`http://localhost:5500/api/ticket-info/${ticketId}`)
+      .then((response) => {
+        setTicketData(response.data); // Setze die Ticketdaten
       })
-      .catch(error => {
-        console.error("Fehler beim Laden der Ticketdaten:", error);
+      .catch((error) => {
+        console.error("Fehler beim Abrufen der Ticketinformationen:", error);
+        setError("Ticketinformationen konnten nicht geladen werden.");
       });
   }, [ticketId]);
 
-  if (!ticketInfo) {
-    return <div>Wird geladen...</div>;
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
+  if (!ticketData) {
+    return <div>Ticketinformationen werden geladen...</div>;
   }
 
   return (
     <div className="ticket-info-container">
-      <h2>Vielen Dank, dass Sie den Zoo besucht haben!</h2>
-      <p>Ticketinhaber: {ticketInfo.firstName} {ticketInfo.lastName}</p>
-      <p>Bestellübersicht:</p>
-      <ul>
-        {ticketInfo.tickets.map((ticket, index) => (
-          <li key={index}>{ticket.count} x {ticket.type} - CHF {(ticket.count * ticket.price).toFixed(2)}</li>
-        ))}
-      </ul>
-      <p><strong>Gesamtsumme: CHF {ticketInfo.total}</strong></p>
+      <h2>Ticketinformationen</h2>
+      <p><strong>Inhaber:</strong> {ticketData.firstName} {ticketData.lastName}</p>
+      <p><strong>E-Mail:</strong> {ticketData.email}</p>
+      <p><strong>Tickets:</strong> {ticketData.tickets.map((t) => `${t.count}x ${t.type}`).join(", ")}</p>
+      <p><strong>Gesamtsumme:</strong> CHF {ticketData.total}</p>
+      <p><strong>Status:</strong> {ticketData.status || "Gültig"}</p>
     </div>
   );
 };
