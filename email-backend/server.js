@@ -37,8 +37,6 @@ app.post("/send-email", async (req, res) => {
             .join("")}
         </ul>
         <p>Gesamtsumme: CHF ${total}</p>
-        <p>Ihr QR-Code:</p>
-        <img src="${qrCode}" alt="QR Code" />
         <p>Vielen Dank!</p>
       `,
     };

@@ -61,6 +61,7 @@ app.post("/send-email", async (req, res) => {
             <p><strong>Ticket:</strong> ${ticket.type}</p>
             <p><strong>Anzahl:</strong> ${ticket.count}</p>
             <p><strong>Preis:</strong> CHF ${(ticket.price * ticket.count).toFixed(2)}</p>
+            <img src="${ticket.qrCodeUrl}" alt="QR Code" />
           </div>
         `
           )
