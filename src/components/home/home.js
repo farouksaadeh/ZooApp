@@ -55,7 +55,7 @@ export default function Home({ loggedInUser, setLoggedInUser }) {
               <a href="#maps">Maps</a>
             </li>
             <li>
-              <a href="#view-animals">View animals</a>
+              <a href="/tour">View animals</a>
             </li>
           </ul>
         </div>
@@ -69,8 +69,8 @@ export default function Home({ loggedInUser, setLoggedInUser }) {
           </h1>
           <p>Explore exotic animals in our futuristic Tour</p>
           <div className="tourBtn">
-            <Link to="/ticket" className="purchase-button">
-              PURCHASE TICKETS
+            <Link to="/tourHome" className="HomeTourButton">
+              Zum Home der Tour
             </Link>
           </div>
         </div>

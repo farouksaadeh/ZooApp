@@ -139,7 +139,7 @@ body {
 }
 
 /* Kauf-Button */
-.purchase-button {
+.HomeTourButton {
   display: inline-block;
   margin-top: 40px;
   padding: 15px 40px;
@@ -154,7 +154,7 @@ body {
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.purchase-button:hover {
+.HomeTourButton:hover {
   background-color: white;
   color: #143217;
   transform: scale(1.1);
@@ -167,7 +167,7 @@ body {
   bottom: 0;
   height: 85vh; /* Etwas größer für bessere Darstellung */
   object-fit: contain;
-  z-index: 3; /* Stellt sicher, dass der Affe über anderen Elementen liegt */
+  z-index: -1111; /* Stellt sicher, dass der Affe über anderen Elementen liegt */
 }
 
 
@@ -248,7 +248,7 @@ body {
     font-size: 28px;
   }
 
-  .purchase-button {
+  .HomeTourButton {
     font-size: 22px;
     padding: 12px 30px;
   }
@@ -266,6 +266,8 @@ body {
 @media (max-width: 768px) {
   .main-content {
     max-width: 90%; /* Noch breiter, damit alles gut lesbar bleibt */
+    margin-left: 0vh; 
+
   }
 
   .zoo-title {
@@ -281,7 +283,7 @@ body {
     font-size: 24px;
   }
 
-  .purchase-button {
+  .HomeTourButton {
     font-size: 20px;
     padding: 10px 25px;
   }
@@ -295,6 +297,8 @@ body {
 @media (max-width: 480px) {
   .main-content {
     max-width: 95%;
+    margin-left: 0vh; 
+
   }
 
   .zoo-title {
@@ -310,7 +314,7 @@ body {
     font-size: 20px;
   }
 
-  .purchase-button {
+  .HomeTourButton {
     font-size: 18px;
     padding: 8px 20px;
   }

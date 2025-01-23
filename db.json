@@ -3,22 +3,26 @@
     {
       "_id": 1,
       "name": "Erwachsene (ab 21 Jahren)",
-      "onlinePrice": 27
+      "onlinePrice": 27,
+      "id": "e733"
     },
     {
       "_id": 2,
       "name": "Jugendliche (16-20 Jahre)",
-      "onlinePrice": 22
+      "onlinePrice": 22,
+      "id": "34ad"
     },
     {
       "_id": 3,
       "name": "Kinder (6-15 Jahre)",
-      "onlinePrice": 14
+      "onlinePrice": 14,
+      "id": "946e"
     },
     {
       "_id": 4,
       "name": "Senioren (ab 65 Jahren)",
-      "onlinePrice": 20
+      "onlinePrice": 20,
+      "id": "f0ee"
     }
   ],
   "customer": [
@@ -77,6 +81,13 @@
       "password": "max@example.com",
       "role": "customer",
       "cart": []
+    },
+    {
+      "id": "b4f0",
+      "name": "3e3e",
+      "email": "3e3e@hotmail.com",
+      "password": "wqdwqdwd",
+      "role": "customer"
     }
   ]
 }

@@ -104,97 +104,101 @@ const Ticket = () => {
   };
 
   return (
-    <div className="ticket-container">
-      <h2 className="ticketh2">Nebensaison (November – Februar)</h2>
-      <div className="ticket-list">
-        {ticketPrices.map((ticket) => (
-          <div key={ticket._id} className="ticket-item">
-            <div className="ticket-info">
-              <h3>{ticket.name}</h3>
-              <p>Online: CHF {ticket.onlinePrice.toFixed(2)}</p>
-            </div>
-            <button
-              onClick={() => addToCart(ticket)}
-              className="add-to-cart-button"
-            >
-              Ticket kaufen
-            </button>
-          </div>
-        ))}
-      </div>
-
-      <h3>Warenkorb</h3>
-      {cart.length === 0 ? (
-        <p>Ihr Warenkorb ist leer.</p>
-      ) : (
-        <ul className="cart-list">
-          {cart.map((item, index) => (
-            <li key={index} className="cart-item">
-              {item.count} x {item.type} - CHF{" "}
-              {(item.price * item.count).toFixed(2)}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <div className="cart-total">
-        <h4>Gesamtsumme: CHF {calculateTotal().toFixed(2)}</h4>
-      </div>
-
-      <button onClick={handlePurchase} className="add-to-cart-button">
-        Kaufen
-      </button>
-
-      {error && (
-        <div className="error-message">
-          <p>{error}</p>
-        </div>
-      )}
-
-      {showEmailForm && (
-        <div className="email-form">
-          <h3>Bitte geben Sie Ihre Daten ein</h3>
-          <form onSubmit={handleEmailSubmit}>
-            <input
-              type="text"
-              placeholder="Vorname"
-              value={userFirstName}
-              onChange={(e) => setUserFirstName(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Nachname"
-              value={userLastName}
-              onChange={(e) => setUserLastName(e.target.value)}
-              required
-            />
-            <input
-              type="email"
-              placeholder="E-Mail-Adresse"
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
-              required
-            />
-            <button type="submit">Bestätigen</button>
-          </form>
-        </div>
-      )}
-
-      {qrCodes.length > 0 && (
-        <div className="qr-code-container">
-          <h3>Ihre QR-Codes</h3>
-          <div className="qr-code-row">
-            {qrCodes.map((qr, index) => (
-              <div key={index} className="qr-code-item">
-                <img src={qr.url} alt={`QR Code für ${qr.type}`} />
-                <p>{qr.type}</p>
+    <div className="ticket-page">
+      <div className="ticket-wrapper">
+        <div className="ticket-container">
+          <h2 className="ticketh2">Nebensaison (November – Februar)</h2>
+          <div className="ticket-list">
+            {ticketPrices.map((ticket) => (
+              <div key={ticket._id} className="ticket-item">
+                <div className="ticket-info">
+                  <h3>{ticket.name}</h3>
+                  <p>Online: CHF {ticket.onlinePrice.toFixed(2)}</p>
+                </div>
+                <button
+                  onClick={() => addToCart(ticket)}
+                  className="add-to-cart-button"
+                >
+                  Ticket kaufen
+                </button>
               </div>
             ))}
           </div>
-          <p>Speichern Sie diese QR-Codes für Ihren Ticketzugang.</p>
+
+          <h3>Warenkorb</h3>
+          {cart.length === 0 ? (
+            <p>Ihr Warenkorb ist leer.</p>
+          ) : (
+            <ul className="cart-list">
+              {cart.map((item, index) => (
+                <li key={index} className="cart-item">
+                  {item.count} x {item.type} - CHF{" "}
+                  {(item.price * item.count).toFixed(2)}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="cart-total">
+            <h4>Gesamtsumme: CHF {calculateTotal().toFixed(2)}</h4>
+          </div>
+
+          <button onClick={handlePurchase} className="add-to-cart-button">
+            Kaufen
+          </button>
+
+          {error && (
+            <div className="error-message">
+              <p>{error}</p>
+            </div>
+          )}
+
+          {showEmailForm && (
+            <div className="email-form">
+              <h3>Bitte geben Sie Ihre Daten ein</h3>
+              <form onSubmit={handleEmailSubmit}>
+                <input
+                  type="text"
+                  placeholder="Vorname"
+                  value={userFirstName}
+                  onChange={(e) => setUserFirstName(e.target.value)}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Nachname"
+                  value={userLastName}
+                  onChange={(e) => setUserLastName(e.target.value)}
+                  required
+                />
+                <input
+                  type="email"
+                  placeholder="E-Mail-Adresse"
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                  required
+                />
+                <button type="submit">Bestätigen</button>
+              </form>
+            </div>
+          )}
+
+          {qrCodes.length > 0 && (
+            <div className="qr-code-container">
+              <h3>Ihre QR-Codes</h3>
+              <div className="qr-code-row">
+                {qrCodes.map((qr, index) => (
+                  <div key={index} className="qr-code-item">
+                    <img src={qr.url} alt={`QR Code für ${qr.type}`} />
+                    <p>{qr.type}</p>
+                  </div>
+                ))}
+              </div>
+              <p>Speichern Sie diese QR-Codes für Ihren Ticketzugang.</p>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
