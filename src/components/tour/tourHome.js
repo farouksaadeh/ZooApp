@@ -1,5 +1,9 @@
 import React from "react";
 import "./tourHome.css";
+import guideIcon from "./icons/guide-icon.png";
+import animalIcon from "./icons/animal-icon.png";
+import infoIcon from "./icons/info-icon.png";
+import ticketIcon from "./icons/ticket-icon.png";
 import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -49,26 +53,32 @@ function TourHome() {
         <Link to="/tour">
           <button className="menu-item">
             <div className="menu-icon guide-icon">
-              <img src="./icons/shop-icon.png" alt="guide" />
+              <img src={guideIcon} alt="guide" />
             </div>
             <span>Guide</span>
           </button>
         </Link>
         <Link to="/tour">
           <button className="menu-item">
-            <div className="menu-icon animals-icon"></div>
+            <div className="menu-icon animals-icon">
+              <img src={animalIcon} alt="guide" />
+            </div>
             <span>Animals</span>
           </button>
         </Link>
         <Link to="/info">
           <button className="menu-item">
-            <div className="menu-icon info-icon"></div>
+            <div className="menu-icon info-icon">
+              <img src={infoIcon} alt="guide" />
+            </div>
             <span>Info</span>
           </button>
         </Link>
         <Link to="/ticket">
           <button className="menu-item">
-            <div className="menu-icon ticket-icon"></div>
+            <div className="menu-icon ticket-icon">
+              <img src={ticketIcon} alt="guide" />
+            </div>
             <span>Ticket</span>
           </button>
         </Link>
