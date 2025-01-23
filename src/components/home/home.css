@@ -157,7 +157,10 @@ body {
 .purchase-button:hover {
   background-color: white;
   color: #143217;
-  transform: scale(1.1);
+}
+
+.tourBtn {
+  margin-top: 60px;
 }
 
 /* Affen-Bild */
