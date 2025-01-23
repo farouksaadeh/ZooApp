@@ -2,13 +2,15 @@ import React from "react";
 import "./tour.css";
 import "./info.css";
 import {Link} from "react-router-dom";
+import logo from "../../assets/transparantLogo/BG-removed.png";
+
 
 function InfoZoo() {
   return (
     <div>
       <div className="header">
         <Link to="/tourHome">
-        <button className="back-button">←</button>
+          <button className="back-button">←</button>
         </Link>
         <h1>Zürich Zoo</h1>
         <div className="options-menu">•••</div>
@@ -23,7 +25,9 @@ function InfoZoo() {
           <button
             className="scroll-down-button"
             onClick={() =>
-              document.getElementById("info").scrollIntoView({ behavior: "smooth" })
+              document
+                .getElementById("info")
+                .scrollIntoView({ behavior: "smooth" })
             }
           >
             ⬇ Mehr erfahren
@@ -32,32 +36,33 @@ function InfoZoo() {
       </section>
 
       <main id="info" className="info-section">
-  <h2>Über den Zoo</h2>
-  <p>
-    Der Zürich Zoo ist nicht nur ein Ort, an dem Tiere bestaunt werden können,
-    es ist ein Tor zu den faszinierendsten Lebensräumen unseres Planeten. 
-    Tauchen Sie ein in die dichten, tropischen Regenwälder, hören Sie das 
-    Rauschen der Savanne und spüren Sie die eisige Kälte der Antarktis. 
-    Jedes Gehege erzählt eine eigene Geschichte und lässt Sie in die Heimat der 
-    Tiere eintauchen.
-  </p>
-  <p>
-    Mit über <strong>400 Tierarten</strong> aus der ganzen Welt setzen wir uns aktiv 
-    für den Schutz bedrohter Arten und die Erhaltung ihres natürlichen Lebensraums 
-    ein. Der Masoala-Regenwald ist unser Herzstück, ein lebendes Ökosystem, das 
-    Sie auf eine unvergessliche Reise in die Biodiversität Madagaskars mitnimmt. 
-    Lassen Sie sich von leuchtenden Chamäleons, kletternden Lemuren und 
-    flatternden Schmetterlingen verzaubern.
-  </p>
-  <p>
-    Erleben Sie die spannende Verbindung von Bildung und Abenteuer, während Sie 
-    nicht nur die Schönheit, sondern auch die Herausforderungen unserer Tierwelt 
-    kennenlernen. Der Zürich Zoo ist mehr als ein Ausflugsziel, er ist eine Mission 
-    für die Zukunft unseres Planeten.
-  </p>
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS3kjf6LkGXxffpY9gv1wNHqc60idWxK1Jdg&s" alt="Zoo Zuerich Logo" width="35%"></img>
-</main>
-
+        <h2>Über den Zoo</h2>
+        <p>
+          Der Zürich Zoo ist nicht nur ein Ort, an dem Tiere bestaunt werden
+          können, es ist ein Tor zu den faszinierendsten Lebensräumen unseres
+          Planeten. Tauchen Sie ein in die dichten, tropischen Regenwälder,
+          hören Sie das Rauschen der Savanne und spüren Sie die eisige Kälte der
+          Antarktis. Jedes Gehege erzählt eine eigene Geschichte und lässt Sie
+          in die Heimat der Tiere eintauchen.
+        </p>
+        <p>
+          Mit über <strong>400 Tierarten</strong> aus der ganzen Welt setzen wir
+          uns aktiv für den Schutz bedrohter Arten und die Erhaltung ihres
+          natürlichen Lebensraums ein. Der Masoala-Regenwald ist unser
+          Herzstück, ein lebendes Ökosystem, das Sie auf eine unvergessliche
+          Reise in die Biodiversität Madagaskars mitnimmt. Lassen Sie sich von
+          leuchtenden Chamäleons, kletternden Lemuren und flatternden
+          Schmetterlingen verzaubern.
+        </p>
+        <p>
+          Erleben Sie die spannende Verbindung von Bildung und Abenteuer,
+          während Sie nicht nur die Schönheit, sondern auch die
+          Herausforderungen unserer Tierwelt kennenlernen. Der Zürich Zoo ist
+          mehr als ein Ausflugsziel, er ist eine Mission für die Zukunft unseres
+          Planeten.
+        </p>
+        <img src={logo} alt="Zoo Zuerich Logo" width="35%"></img>
+      </main>
 
       <footer className="footer">
         <div className="footer-content">
@@ -88,7 +93,9 @@ function InfoZoo() {
         </div>
 
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} Zürich Zoo. Alle Rechte vorbehalten.</p>
+          <p>
+            © {new Date().getFullYear()} Zürich Zoo. Alle Rechte vorbehalten.
+          </p>
         </div>
       </footer>
     </div>
