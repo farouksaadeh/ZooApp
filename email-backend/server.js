@@ -4,22 +4,28 @@ const app = express();
 
 app.use(express.json());
 
+const cors = require("cors"); // CORS importieren
+app.use(cors({ origin: "http://localhost:3000" })); // CORS aktivieren
+
+
 app.post("/send-email", async (req, res) => {
   const { email, firstName, lastName, tickets, total, qrCode } = req.body;
+
+  
 
   try {
     // Nodemailer-Transport konfigurieren
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
-        user: "dein-email@gmail.com", // Ersetze mit deiner E-Mail
-        pass: "dein-passwort", // Ersetze mit deinem Passwort
+        user: "fabio.fr.russo@gmail.com", // Ersetze mit deiner E-Mail
+        pass: "slqr qbwl frhj pujo", // Ersetze mit deinem Passwort
       },
     });
 
     // E-Mail-HTML-Inhalt mit eingebettetem QR-Code
     const mailOptions = {
-      from: "dein-email@gmail.com",
+      from: "fabio.fr.russo@gmail.com",
       to: email,
       subject: "Deine Tickets",
       html: `

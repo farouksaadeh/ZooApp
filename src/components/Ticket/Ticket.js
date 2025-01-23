@@ -105,7 +105,7 @@ const Ticket = () => {
 
   return (
     <div className="ticket-container">
-      <h2 class="ticketh2">Nebensaison (November – Februar)</h2>
+      <h2 className="ticketh2">Nebensaison (November – Februar)</h2>
       <div className="ticket-list">
         {ticketPrices.map((ticket) => (
           <div key={ticket._id} className="ticket-item">
@@ -130,7 +130,8 @@ const Ticket = () => {
         <ul className="cart-list">
           {cart.map((item, index) => (
             <li key={index} className="cart-item">
-              {item.count} x {item.type} - CHF {(item.price * item.count).toFixed(2)}
+              {item.count} x {item.type} - CHF{" "}
+              {(item.price * item.count).toFixed(2)}
             </li>
           ))}
         </ul>
