@@ -62,6 +62,13 @@
       "email": "usertester@hotmail.com",
       "password": "usertester",
       "role": "customer"
+    },
+    {
+      "id": "2de8",
+      "name": "jaynasxgel@hotmail.com",
+      "email": "jaynhuuzjfvagel@hotmail.com",
+      "password": "sacac",
+      "role": "customer"
     }
   ]
 }

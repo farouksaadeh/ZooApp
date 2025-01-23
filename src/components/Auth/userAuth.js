@@ -236,7 +236,7 @@ function UserAuth({ setLoggedInUser }) {
                   }}
                 >
                   {textOptions.map((text, index) => (
-                    <h2 key={index}>{text}</h2>
+                    <h2 class="h2UserAuth" key={index}>{text}</h2>
                   ))}
                 </div>
               </div>

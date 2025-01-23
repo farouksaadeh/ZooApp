@@ -33,7 +33,7 @@ body {
 /* Hauptcontainer */
 .overlay {
   position: relative;
-  z-index: 2;
+  z-index: 1;  
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -47,13 +47,19 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 55%; /* Breite bleibt gleich */
+  width: 55%;
   height: 100%;
   background: linear-gradient(-150deg, rgba(13, 34, 13, 0.7) 0%, rgba(55, 145, 55, 0.7) 100%);
-  transform: skewX(20deg); /* Spiegelung der Schräge */
-  transform-origin: right; /* Ursprung nach rechts setzen */
-  z-index: 1;
+  transform: skewX(20deg);
+  transform-origin: right;
+  z-index: -1; /* Setzt es in den Hintergrund */
 }
+
+.main-content {
+  margin-left: 5vw; /* Erhöhen, um mehr nach rechts zu verschieben */
+}
+
+
 
 
 /* Sidebar */
@@ -106,32 +112,13 @@ body {
   margin: 20px 0;
 }
 
-/* Hauptbereich */
-.main-content {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Hält ALLES zentriert */
-  justify-content: center; /* Vertikale Zentrierung */
-  text-align: center; /* Text zentriert anzeigen */
-  
-  gap: 10px; /* Mehr Abstand zwischen Elementen */
-  padding-left: 5vw; /* Schiebt den gesamten Inhalt leicht nach links */
-  max-width: 50vw; /* Begrenzung der Breite */
-  
-  position: relative;
-  z-index: 300; /* Stellt sicher, dass der Text über der grünen Fläche liegt */
-}
-
-
-
-
 
 
 .main-content h4 {
   font-size: 35px;
   font-weight: 400;
   margin-bottom: 10px;
+    z-index: 3;
   
 }
 
@@ -140,6 +127,7 @@ body {
   font-weight: bold;
   text-transform: uppercase;
   line-height: 210px; /* Mehr Abstand zwischen den Zeilen */
+  z-index: 1000;
 }
 
 .main-content p {
@@ -234,9 +222,6 @@ body {
   color: #143217;
 }
 
-h2{
-  color: white;
-}
 /* Responsive Optimierung */
 /* ============ RESPONSIVE DESIGN ============= */
 
@@ -345,4 +330,3 @@ h2{
     font-size: 14px;
   }
 }
-

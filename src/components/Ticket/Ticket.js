@@ -49,7 +49,7 @@ const Ticket = () => {
 
   return (
     <div className="ticket-container">
-      <h2>Nebensaison (November – Februar)</h2>
+      <h2 class="ticketh2">Nebensaison (November – Februar)</h2>
       <div className="ticket-list">
         {ticketPrices.map((ticket) => (
           <div key={ticket._id} className="ticket-item">

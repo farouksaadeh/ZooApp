@@ -31,23 +31,6 @@ export default function Home({ loggedInUser, setLoggedInUser }) {
 
   return (
     <section className="home-section">
-      <div className="sidebar">
-        <h2>ZÜRI ZOO</h2>
-        <ul>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <h3>EVENTS</h3>
-        <ul>
-          <li><Link to="/tourHome">Map</Link></li>
-          <li><Link to="/tourHome">View Animals</Link></li>
-        </ul>
-      </div>
-      <div className="main-content">
-        <h4>Spotted in</h4>
-        <h1>Zoo Zürich</h1>
-        <p>Explore exotic animals in our futuristic Tour</p>
-        <button className="purchase-button">PURCHASE TICKETS</button>
       <img
         src={Hintergrundbild}
         alt="Hintergrund"
@@ -113,9 +96,6 @@ export default function Home({ loggedInUser, setLoggedInUser }) {
           )}
         </div>
       </div>
-      <Link to="/login" className="login-button">Login</Link>
-      <Link to="/ticket" className="ticket-button">Tickets</Link>
-
     </section>
   );
 }

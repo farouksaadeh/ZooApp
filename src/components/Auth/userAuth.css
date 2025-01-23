@@ -127,7 +127,6 @@ input {
 }
 
 .auth-input-field {
-  position: absolute;
   width: 100%;
   height: 100%;
   background: none;
