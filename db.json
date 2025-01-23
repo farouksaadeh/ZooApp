@@ -1,0 +1,67 @@
+{
+  "customer": [
+    {
+      "name": "Max Mustermann",
+      "email": "max@example.com",
+      "password": "123456",
+      "role": "customer",
+      "id": "29cc"
+    },
+    {
+      "name": "Admdddin User",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "role": "admin",
+      "id": "4c2f"
+    },
+    {
+      "id": "fffc",
+      "name": "dwedw",
+      "email": "wedwed@hotmai.com",
+      "password": "wedewdew",
+      "role": "customer"
+    },
+    {
+      "id": "9754",
+      "name": "max@example.com",
+      "email": "mssax@example.com",
+      "password": "max@example.com",
+      "role": "customer"
+    },
+    {
+      "id": "dca4",
+      "name": "Farouk Saadeh",
+      "email": "farouksaadeh@swisscom.com",
+      "password": "Saadeh152007",
+      "role": "customer"
+    },
+    {
+      "id": "f91b",
+      "name": "Nemanja Test",
+      "email": "Nemanja@hotmail.com",
+      "password": "Nemanja@hotmail.com",
+      "role": "customer"
+    },
+    {
+      "id": "f91b",
+      "name": "Nemanja Test",
+      "email": "max@example.com",
+      "password": "max@example.com",
+      "role": "customer"
+    },
+    {
+      "id": "6cb4",
+      "name": "Jay Nagel Test",
+      "email": "jaynagel@hotmail.com",
+      "password": "JayJAy",
+      "role": "customer"
+    },
+    {
+      "id": "a3d6",
+      "name": "User Tester",
+      "email": "usertester@hotmail.com",
+      "password": "usertester",
+      "role": "customer"
+    }
+  ]
+}

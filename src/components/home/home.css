@@ -1,27 +1,81 @@
-.home-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-  height: 100vh;
-  color: white;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
   background-color: #143217;
 }
 
-.sidebar {
-  flex: 1;
-  max-width: 200px;
-  font-family: Arial, sans-serif;
+.home-section {
+  position: relative;
+  width: 100%;
+  height: auto; /* Lässt den Container mit dem Inhalt wachsen */
+  overflow-x: hidden; /* Nur horizontales Scrollen verhindern */}
+
+/* Hintergrundbild */
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
 }
 
-.sidebar h2, .sidebar h3 {
+/* Hauptcontainer */
+.overlay {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px;
+  height: 100vh;
+  color: white;
+}
+
+.overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%; /* Breite bleibt gleich */
+  height: 100%;
+  background: linear-gradient(-150deg, rgba(13, 34, 13, 0.7) 0%, rgba(55, 145, 55, 0.7) 100%);
+  transform: skewX(20deg); /* Spiegelung der Schräge */
+  transform-origin: right; /* Ursprung nach rechts setzen */
+  z-index: 1;
+}
+
+
+/* Sidebar */
+.sidebar {
+  position: absolute; /* Fixiert die Sidebar oben links */
+  top: 30px;
+  left: 35px;
+  max-width: 250px;
+  z-index: 100;
+}
+
+
+.sidebar h2 {
   font-weight: bold;
+  font-size: 25px;
+  margin-bottom: 15px;
 }
 
 .sidebar ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
-  margin: 0 0 20px 0;
+  margin: 0;
 }
 
 .sidebar ul li {
@@ -31,55 +85,142 @@
 .sidebar ul li a {
   color: white;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 17px;
+  transition: 0.3s;
 }
 
+.sidebar ul li a:hover {
+  color: #cfcfcf;
+}
+
+.sidebar h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 25px;
+}
+
+.line-separator {
+  width: 50px;
+  height: 2px;
+  background-color: white;
+  margin: 20px 0;
+}
+
+/* Hauptbereich */
 .main-content {
   flex: 3;
-  text-align: center;
-  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Hält ALLES zentriert */
+  justify-content: center; /* Vertikale Zentrierung */
+  text-align: center; /* Text zentriert anzeigen */
+  
+  gap: 10px; /* Mehr Abstand zwischen Elementen */
+  padding-left: 5vw; /* Schiebt den gesamten Inhalt leicht nach links */
+  max-width: 50vw; /* Begrenzung der Breite */
+  
+  position: relative;
+  z-index: 300; /* Stellt sicher, dass der Text über der grünen Fläche liegt */
 }
+
+
+
+
+
 
 .main-content h4 {
-  font-size: 16px;
-  margin: 0;
-  font-weight: 300;
+  font-size: 35px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  
 }
 
-.main-content h1 {
-  font-size: 80px;
-  margin: 0;
+.zoo-title {
+  font-size: 200px; /* Größerer Schriftzug */
   font-weight: bold;
+  text-transform: uppercase;
+  line-height: 210px; /* Mehr Abstand zwischen den Zeilen */
 }
 
 .main-content p {
-  font-size: 18px;
-  margin: 10px 0 30px 0;
+  font-size: 28px;
+  margin-top: 10px;
+  color: #f0f0f0;
+  max-width: 90%; /* Verhindert, dass der Text zu breit wird */
+
 }
 
+/* Kauf-Button */
 .purchase-button {
-  padding: 15px 30px;
-  font-size: 16px;
-  background-color: transparent;
-  border: 2px solid white;
+  display: inline-block;
+  margin-top: 40px;
+  padding: 15px 40px;
+  font-size: 26px;
+  font-weight: bold;
   color: white;
+  background-color: transparent;
+  border: 3px solid white;
+  text-decoration: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .purchase-button:hover {
   background-color: white;
   color: #143217;
+  transform: scale(1.1);
 }
 
-.login-button {
+/* Affen-Bild */
+.monkey-image {
+  position: absolute; /* Ändere von fixed auf absolute */
+  right: 0;
+  bottom: 0;
+  height: 85vh; /* Etwas größer für bessere Darstellung */
+  object-fit: contain;
+  z-index: 3; /* Stellt sicher, dass der Affe über anderen Elementen liegt */
+}
+
+
+/* Login/Logout */
+.user-section {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  font-size: 14px;
+  top: 15px; /* 5px mehr Abstand nach oben */
+  right: 15px; /* 5px mehr Abstand nach rechts */
+  padding: 10px; /* 5px mehr Padding für größere Fläche */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-radius: 10px; /* Abgerundete Ecken */
+
+  /* Blurry Hintergrund mit weniger Unschärfe */
+  background: rgba(255, 255, 255, 0.15); /* Etwas weniger weiße Transparenz */
+  backdrop-filter: blur(5px); /* Weniger Blur als vorher */
+  -webkit-backdrop-filter: blur(5px); /* Safari Unterstützung */
+}
+
+
+
+.user-name {
+  font-size: 16px;
   color: white;
-  background-color: #143217;
+  font-weight: normal;
+  margin-right: 20px;
+
+}
+
+.user-name .bold-name {
+  font-weight: bold;
+}
+
+.login-button,
+.logout-button {
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: transparent;
   border: 2px solid white;
   text-decoration: none;
   border-radius: 5px;
@@ -87,7 +228,8 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-.login-button:hover {
+.login-button:hover,
+.logout-button:hover {
   background-color: white;
   color: #143217;
 }
@@ -95,3 +237,112 @@
 h2{
   color: white;
 }
+/* Responsive Optimierung */
+/* ============ RESPONSIVE DESIGN ============= */
+
+/* Tablets (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .overlay::before {
+    display: none;
+  }
+
+   .main-content {
+    padding-left: 0;  /* Entfernt das linke Padding */
+    max-width: 100%;  /* Lässt den Inhalt breiter werden */
+    align-items: center; /* Zentriert alles horizontal */
+    text-align: center; /* Text auch zentriert */
+  }
+
+
+  .zoo-title {
+    font-size: 150px; /* Kleinere Schriftgröße */
+    line-height: 160px;
+  }
+
+  .main-content p {
+    font-size: 28px;
+  }
+
+  .purchase-button {
+    font-size: 22px;
+    padding: 12px 30px;
+  }
+
+  .sidebar {
+    display: none; /* Blendet die Sidebar auf Tablets aus */
+  }
+
+  .monkey-image {
+    height: 50vh;
+  }
+}
+
+/* Smartphones (max-width: 768px) */
+@media (max-width: 768px) {
+  .main-content {
+    max-width: 90%; /* Noch breiter, damit alles gut lesbar bleibt */
+  }
+
+  .zoo-title {
+    font-size: 100px; /* Kleinere Schrift */
+    line-height: 110px;
+  }
+
+  .main-content h4 {
+    font-size: 30px;
+  }
+
+  .main-content p {
+    font-size: 24px;
+  }
+
+  .purchase-button {
+    font-size: 20px;
+    padding: 10px 25px;
+  }
+
+  .monkey-image {
+    height: 45vh;
+  }
+}
+
+/* Kleine Smartphones (max-width: 480px) */
+@media (max-width: 480px) {
+  .main-content {
+    max-width: 95%;
+  }
+
+  .zoo-title {
+    font-size: 80px; /* Noch kleiner für Mobilgeräte */
+    line-height: 90px;
+  }
+
+  .main-content h4 {
+    font-size: 26px;
+  }
+
+  .main-content p {
+    font-size: 20px;
+  }
+
+  .purchase-button {
+    font-size: 18px;
+    padding: 8px 20px;
+  }
+
+  .monkey-image {
+    height: 40vh; /* Kleiner, damit es in den Viewport passt */
+  }
+
+  .user-section {
+    top: 10px;
+    right: 10px;
+  }
+
+  .login-button,
+  .logout-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
